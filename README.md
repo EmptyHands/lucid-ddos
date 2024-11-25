@@ -95,7 +95,7 @@ In the first step, the parser extracts the features from the packets of all the 
 This first step can be executed with command:
 
 ```
-python3 lucid_dataset_parser.py --dataset_type DOS2019 --dataset_folder ./sample-dataset/ --packets_per_flow 10 --dataset_id DOS2019 --traffic_type all --time_window 10
+python lucid_dataset_parser.py --dataset_type DOS2019 --dataset_folder ./sample-dataset/ --packets_per_flow 10 --dataset_id DOS2019 --traffic_type all --time_window 10
 ```
 
 This will process in parallel the two files, producing a file named ```10t-10n-DOS2019-preprocess.data```. In general, the script loads all the files with extension ```.pcap``` contained in the folder indicated with option ```--dataset_folder```. The files are processed in parallel to minimise the execution time.
