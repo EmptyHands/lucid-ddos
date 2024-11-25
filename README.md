@@ -113,7 +113,7 @@ Finally, three files (training, validation and test sets) are saved in *hierarch
 The second step is executed with command:
 
 ```
-python3 lucid_dataset_parser.py --preprocess_folder ./sample-dataset/
+python lucid_dataset_parser.py --preprocess_folder ./sample-dataset/
 ```
 
 If option ```--output_folder``` is not used, the output will be produced in the input folder specified with option ```--preprocess_folder```.
@@ -163,7 +163,7 @@ To execute the training process, the following parameters can be specified when 
 To train LUCID, execute the following command:
 
 ```
-python3 lucid_cnn.py --train ./sample-dataset/
+python lucid_cnn.py --train ./sample-dataset/
 ```
 
 This command trains LUCID over the grid of hyperparameters, maximum 1000 epochs for each point in the grid. The training process can stop earlier if no progress towards the minimum loss is observed for PATIENCE=10 consecutive epochs. The model which maximises the accuracy on the validation set is saved in ```h5``` format in the ```output``` folder, along with a ```csv``` file with the performance of the model on the validation set.  The name of the two files is the same (except for the extension) and is in the following format:
@@ -193,7 +193,7 @@ Testing means evaluating a trained model of LUCID with unseen data (data not use
 To test LUCID, run the following command:
 
 ```
-python3 lucid_cnn.py --predict ./sample-dataset/ --model ./output/10t-10n-DOS2019-LUCID.h5
+python lucid_cnn.py --predict ./sample-dataset/ --model ./output/10t-10n-DOS2019-LUCID.h5
 ```
 
 The output printed on the terminal and saved in a text file in the ```output``` folder in the following format:
@@ -223,7 +223,7 @@ Online inference can be started by executing ```lucid_cnn.py``` followed by one 
 If the argument of ```predict_live``` option is a network interface, LUCID will sniff the network traffic from that interface and will return the classification results every time the time window expires. The duration of the time window is automatically detected from the prefix of the model's name (e.g., ```10t``` indicates a 10-second time window). To start the inference on live traffic, use the following command:
 
 ```
-python3 lucid_cnn.py --predict_live eth0 --model ./output/10t-10n-DOS2019-LUCID.h5 --dataset_type DOS2019
+python lucid_cnn.py --predict_live eth0 --model ./output/10t-10n-DOS2019-LUCID.h5 --dataset_type DOS2019
 ```
 
 Where ```eth0``` is the name of the network interface, while ```dataset_type``` indicates the address scheme of the traffic. This is optional and, as written above, it is only used to obtain the ground truth labels needed to compute the classification accuracy.
@@ -237,7 +237,7 @@ DOS2019_FLOWS = {'attackers': ['172.16.0.5'], 'victims': ['192.168.50.1', '192.1
 Of course, the above dictionary can be changed to meet the address scheme of the network where the experiments are executed. Alternatively, one can use the ```attack_net``` and ```victim_net``` options as follows:
 
 ```
-python3 lucid_cnn.py --predict_live eth0 --model ./output/10t-10n-DOS2019-LUCID.h5 --attack_net 11.0.0.0/24 --victim_net 10.42.0.0/24
+python lucid_cnn.py --predict_live eth0 --model ./output/10t-10n-DOS2019-LUCID.h5 --attack_net 11.0.0.0/24 --victim_net 10.42.0.0/24
 ```
 
 Once LUCID has been started on the victim machine using one of the two examples above, we can start the attack from another host machine using one of the following scripts based on the ```mausezahn``` tool (https://github.com/uweber/mausezahn):
@@ -255,7 +255,7 @@ The output of LUCID on the victim machine will be similar to that reported in Se
 Similar to the previous case on live traffic, inference on a pre-recorded traffic trace can be started with command:
 
 ```
-python3 lucid_cnn.py --predict_live ./sample-dataset/CIC-DDoS-2019-UDPLag.pcap --model ./output/10t-10n-DOS2019-LUCID.h5 --dataset_type DOS2019
+python lucid_cnn.py --predict_live ./sample-dataset/CIC-DDoS-2019-UDPLag.pcap --model ./output/10t-10n-DOS2019-LUCID.h5 --dataset_type DOS2019
 ```
 
 In this case, the argument of option ```predict_live``` must be the path to a pcap file. The script parses the file from the beginning to the end, printing the classification results every time the time window expires. The duration of the time window is automatically detected from the prefix of the model's name (e.g., ```10t``` indicates a 10-second time window). 
